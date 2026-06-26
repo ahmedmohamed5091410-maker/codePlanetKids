@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عروض حصرية | Code Planet Kids</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #fdf2e9; }
+        
+        .offers-hero { 
+            background: linear-gradient(45deg, #FF6B6B, #ff9f43); 
+            padding: 80px 20px 120px; 
+            text-align: center; 
+            color: white; 
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); 
+        }
+        .offers-hero h1 { font-size: 3.5rem; text-shadow: 2px 2px 0 rgba(0,0,0,0.1); margin-bottom: 10px; }
+        
+        /* شريط التنبيه الأصفر (المعدل) */
+        .urgent-bar {
+            background: #fff3cd; 
+            color: #856404; 
+            padding: 15px; 
+            text-align: center;
+            border-radius: 10px; 
+            margin: -80px auto 30px; /* نرفعه فوق الكروت */
+            font-weight: bold;
+            border: 1px solid #ffeeba;
+            max-width: 800px;
+            position: relative;
+            z-index: 10; /* عشان يظهر فوق */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .deals-container {
+            max-width: 1100px; 
+            margin: 0 auto 50px; 
+            padding: 0 20px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px;
+        }
+
+        /* كارت العرض */
+        .hot-deal-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1); position: relative;
+            transition: 0.3s; border: 2px solid transparent;
+        }
+        .hot-deal-card:hover { transform: translateY(-10px); border-color: #FF6B6B; }
+
+        /* شريط العنوان */
+        .deal-header {
+            padding: 20px; text-align: center; color: white;
+            font-weight: bold; font-size: 1.5rem; position: relative;
+        }
+        
+        .bg-red { background: #e74c3c; }
+        .bg-purple { background: #8e44ad; }
+        .bg-green { background: #27ae60; }
+
+        /* المثلث اللي نازل */
+        .deal-header::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            border-left: 10px solid transparent; border-right: 10px solid transparent;
+            border-top: 10px solid;
+        }
+        .bg-red::after { border-top-color: #e74c3c; }
+        .bg-purple::after { border-top-color: #8e44ad; }
+        .bg-green::after { border-top-color: #27ae60; }
+
+        .deal-body { padding: 30px 20px; text-align: center; }
+        
+        .old-price { text-decoration: line-through; color: #999; font-size: 1.2rem; }
+        .new-price { font-size: 3rem; font-weight: 800; color: #2c3e50; line-height: 1; margin: 10px 0; }
+        .save-badge { background: #ffeaa7; color: #d35400; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-block; margin-bottom: 20px; }
+
+        .features { list-style: none; text-align: right; margin-bottom: 20px; }
+        .features li { padding: 8px 0; border-bottom: 1px dashed #eee; color: #555; }
+        .features li i { color: #2ecc71; margin-left: 10px; }
+
+        .btn-claim {
+            display: block; width: 100%; padding: 15px; border-radius: 10px;
+            text-decoration: none; font-weight: bold; color: white;
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        }
+        .btn-claim:hover { filter: brightness(1.1); transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo"> Code Planet Kids</a>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <nav id="navbar">
+                <a href="index.html">الرئيسية</a>
+                <a href="courses.html">الدورات</a>
+                <a href="offers.html" style="color: var(--primary-color);">العروض</a>
+                <a href="jobs.html" style="color: #f1c40f;">انضم لفريقنا</a>
+                <a href="register.html" class="cta-btn">سجل الآن</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="offers-hero">
+        <h1>🔥 عروض تحطيم الأسعار</h1>
+        <p>استثمر في طفلك بأذكى طريقة.. العروض لفترة محدودة!</p>
+    </div>
+
+    <main class="container">
+        
+        <!-- الشريط الأصفر (بقى ظاهر تماماً دلوقتي) -->
+        <div class="urgent-bar">
+            <i class="fas fa-clock"></i> تنبيه: هذه العروض متاحة لأول 50 مشترك فقط هذا الشهر!
+        </div>
+
+        <div class="deals-container">
+            
+            <!-- عرض 1: الباقة الشاملة -->
+            <div class="hot-deal-card">
+                <div class="deal-header bg-red">باقة "بطل البرمجة" 🦸‍♂️</div>
+                <div class="deal-body">
+                    <span class="save-badge">وفر 300 جنيه!</span>
+                    <div>
+                        <span class="old-price">1800</span>
+                        <span class="new-price" style="color: #e74c3c;">1500</span> ج.م
+                    </div>
+                    <p style="color: #777; font-size: 0.9rem;">(سكراتش + بايثون مستوى 1)</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> المسار الكامل من الصفر</li>
+                        <li><i class="fas fa-check-circle"></i> 28 حصة تدريبية</li>
+                        <li><i class="fas fa-check-circle"></i> شهادتين معتمدتين</li>
+                        <li><i class="fas fa-star" style="color: gold;"></i> متابعة خاصة VIP</li>
+                    </ul>
+                    <a href="register.html?plan=عرض_بطل_البرمجة_1500" class="btn-claim bg-red">اقتنص العرض الآن ⚡</a>
+                </div>
+            </div>
+
+            <!-- عرض 2: الأصحاب -->
+            <div class="hot-deal-card">
+                <div class="deal-header bg-purple">عرض "الشلة" 👫</div>
+                <div class="deal-body">
+                    <span class="save-badge" style="background: #e0d4fc; color: #8e44ad;">خصم 20% لكل واحد</span>
+                    <div>
+                        <span class="new-price" style="color: #8e44ad;">20%</span> خصم
+                    </div>
+                    <p style="color: #777;">لما تشترك أنت وصاحبك (أو أخوك)</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> أي كورس تختاروه</li>
+                        <li><i class="fas fa-check-circle"></i> نفس المواعيد (عشان تشجعوا بعض)</li>
+                        <li><i class="fas fa-check-circle"></i> مشروع مشترك (Teamwork)</li>
+                    </ul>
+                    <a href="register.html?plan=عرض_الشلة_20_خصم" class="btn-claim bg-purple">اشتركوا سوا ووفروا</a>
+                </div>
+            </div>
+
+            <!-- عرض 3: الدفع المبكر -->
+            <div class="hot-deal-card">
+                <div class="deal-header bg-green">حجز مبكر 🐦</div>
+                <div class="deal-body">
+                    <span class="save-badge" style="background: #d5f5e3; color: #27ae60;">خصم 100 جنيه</span>
+                    <div>
+                        <span class="new-price" style="color: #27ae60;">-100</span> ج.م
+                    </div>
+                    <p style="color: #777;">لو حجزت في بداية الشهر الجديد</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> ساري على أي كورس</li>
+                        <li><i class="fas fa-check-circle"></i> حجز مقعد مؤكد</li>
+                        <li><i class="fas fa-check-circle"></i> أولوية في اختيار المواعيد</li>
+                    </ul>
+                    <a href="register.html?plan=عرض_الحجز_المبكر" class="btn-claim bg-green">احجز بدري واستفيد</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <a href="https://wa.me/201018953457" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <footer class="site-footer">
+        <div class="container"><p style="text-align: center; color: #bdc3c7;">© 2026 Code Planet Kids.</p></div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navbar').classList.toggle('active'); }
+    </script>
+</body>
+</html>

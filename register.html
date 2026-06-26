@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الحجز | Code Planet Kids</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        header, footer { display: none; }
+        body { background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Cairo', sans-serif; margin: 0; padding: 20px; }
+        .checkout-wrapper { display: grid; grid-template-columns: 1fr 1.6fr; background: white; width: 100%; max-width: 1100px; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.05); }
+        .summary-col { background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 40px; position: relative; display: flex; flex-direction: column; }
+        .summary-col h2 { font-size: 1.4rem; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .order-row { display: flex; justify-content: space-between; margin-bottom: 15px; color: #bdc3c7; font-size: 0.95rem; }
+        .order-row.total { margin-top: auto; color: #4ECDC4; font-size: 1.6rem; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+        .form-col { padding: 40px; background: white; }
+        .back-btn { text-decoration: none; color: #7f8c8d; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 20px; }
+        .form-title { font-size: 1.5rem; color: #2c3e50; margin-bottom: 25px; font-weight: bold; }
+        .input-group { margin-bottom: 20px; }
+        .label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: #636e72; font-weight: bold; }
+        .input-field { width: 100%; padding: 12px 15px; border: 2px solid #f1f2f6; border-radius: 10px; font-family: 'Cairo', sans-serif; transition: 0.3s; font-size: 1rem; }
+        .input-field:focus { border-color: #4ECDC4; outline: none; background: #fafafa; }
+        .select-wrapper { position: relative; }
+        .select-wrapper select { appearance: none; -webkit-appearance: none; cursor: pointer; background: white; }
+        .select-arrow { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #7f8c8d; pointer-events: none; font-size: 0.9rem; }
+        .row-flex { display: flex; gap: 15px; }
+        .payment-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .pay-card { border: 2px solid #f1f2f6; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .pay-card:hover { border-color: #ddd; }
+        .pay-card.active { border-color: #4ECDC4; background: #e0fcfb; color: #00796b; }
+        .pay-info { display: none; background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; border: 1px dashed #ccc; margin-bottom: 20px; font-size: 0.9rem; }
+        .copy-box { background: #fff; padding: 8px; border-radius: 8px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px; }
+        
+        .confirm-btn { width: 100%; padding: 15px; background: #2c3e50; color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; box-shadow: 0 5px 15px rgba(44, 62, 80, 0.2); }
+        .confirm-btn:hover { transform: translateY(-2px); background: #34495e; }
+
+        .upload-info-box { border: 2px dashed #bdc3c7; background: #f9f9f9; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px; }
+        
+        /* خانة الكوبون */
+        .coupon-section { margin-top: 20px; padding: 15px; background: #fffdf5; border: 1px dashed #e67e22; border-radius: 10px; }
+        .coupon-input-group { display: flex; gap: 10px; }
+        .coupon-btn { background: #e67e22; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .coupon-btn:hover { background: #d35400; }
+
+        /* Popup Styles */
+        .custom-popup-content { text-align: center; font-family: 'Cairo', sans-serif; }
+        .popup-icon-box i { font-size: 4rem; color: #2ecc71; animation: popIn 0.5s; }
+        .popup-title { font-size: 1.5rem; color: #2c3e50; margin: 10px 0; font-weight: 800; }
+        .popup-text { font-size: 1rem; color: #7f8c8d; margin-bottom: 25px; }
+        .whatsapp-btn-large { display: flex; align-items: center; justify-content: center; gap: 10px; background-color: #25D366; color: white !important; padding: 15px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; text-decoration: none; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); transition: 0.3s; margin: 0 auto; width: fit-content; }
+        .whatsapp-btn-large:hover { transform: translateY(-3px); background-color: #128c7e; }
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background-color: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; text-align: center; font-size: 35px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index: 9999; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; animation: pulse 2s infinite; }
+        .whatsapp-float:hover { background-color: #128c7e; transform: scale(1.1); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @media (max-width: 850px) { .checkout-wrapper { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; } .summary-col { order: 1; padding: 25px; border-radius: 20px 20px 0 0; } .form-col { order: 2; padding: 25px; } .row-flex { flex-direction: column; gap: 15px; } body { padding: 10px; } }
+    </style>
+</head>
+<body>
+    <div class="checkout-wrapper">
+        <div class="summary-col">
+            <h2>🧾 ملخص الطلب</h2>
+            <div class="order-row">
+                <span id="course-name">اختر الدورة...</span>
+                <span id="course-price">--</span>
+            </div>
+            <div class="order-row" id="discount-row" style="display: none; color: #27ae60;">
+                <span>قيمة الخصم</span>
+                <span id="discount-amount">-0.00 ج.م</span>
+            </div>
+            <div class="order-row">
+                <span>الضريبة / الرسوم</span>
+                <span>0.00 ج.م</span>
+            </div>
+            <div class="order-row total">
+                <span>الإجمالي</span>
+                <span id="total-price">0.00 ج.م</span>
+            </div>
+            <div style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7; text-align: center;">
+                <i class="fas fa-shield-alt"></i> ضمان استرداد الأموال لمدة 7 أيام
+            </div>
+        </div>
+
+        <div class="form-col">
+            <a href="courses.html" class="back-btn"><i class="fas fa-arrow-right"></i> رجوع للدورات</a>
+            <div class="form-title">بيانات الطالب</div>
+
+            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="6165816a-da06-441b-aaeb-a834d6c319c2">
+                <input type="hidden" name="subject" value="حجز جديد (Lead) 💰">
+                <input type="hidden" id="selected_plan" name="Selected_Plan" value="تسجيل عام">
+
+                <div class="input-group">
+                    <label class="label">الاسم بالكامل</label>
+                    <input type="text" id="child_name" name="child_name" class="input-field" placeholder="اسم الطالب الثلاثي" required>
+                </div>
+
+                <div class="row-flex">
+                    <div class="input-group" style="flex: 1;">
+                        <label class="label">السن</label>
+                        <input type="number" id="child_age" name="child_age" class="input-field" required>
+                    </div>
+                    <div class="input-group" style="flex: 2;">
+                        <label class="label">رقم واتساب ولي الأمر</label>
+                        <input type="tel" id="parent_phone" name="parent_phone" class="input-field" placeholder="01xxxxxxxxx" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label class="label">الدورة التدريبية</label>
+                    <div class="select-wrapper">
+                        <select id="course_dropdown" name="course_selected" class="input-field" onchange="updateInvoice()" required>
+                            <option value="" disabled selected>-- اختر الدورة --</option>
+                            <option value="scratch" data-price="800" data-name="دورة سكراتش الشاملة">سكراتش الشاملة (800 ج.م)</option>
+                            <option value="python" data-price="1000" data-name="بايثون المستوى الأول">بايثون المستوى الأول (1000 ج.م)</option>
+                            <option value="python_oop" data-price="1500" data-name="بايثون المستوى الثاني (OOP)">بايثون المستوى الثاني (1500 ج.م)</option>
+                        </select>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <div class="coupon-section">
+                    <label class="label" style="color: #d35400;">هل لديك كود خصم؟ 🎟️</label>
+                    <div class="coupon-input-group">
+                        <input type="text" id="coupon_input" class="input-field" placeholder="أدخل الكود هنا" style="margin-bottom: 0;">
+                        <button type="button" class="coupon-btn" onclick="applyCoupon()">تفعيل</button>
+                    </div>
+                    <div id="coupon-msg" style="font-size: 0.9rem; margin-top: 5px;"></div>
+                </div>
+
+                <div class="form-title" style="margin-top: 30px; font-size: 1.2rem;">الدفع والتأكيد</div>
+
+                <div class="payment-options">
+                    <div class="pay-card" onclick="selectPay('vodafone', this)">
+                        <i class="fas fa-mobile-alt" style="font-size: 1.5rem; display: block; margin-bottom: 5px;"></i>
+                        فودافون كاش
+                    </div>
+                    <div class="pay-card" onclick="selectPay('instapay', this)">
+                        <i class="fas fa-university" style="font-size: 1.5rem; display: block; margin-bottom: 5px;"></i>
+                        انستا باي
+                    </div>
+                </div>
+
+                <div id="vodafone-info" class="pay-info">
+                    <p style="margin-bottom: 5px;">حول المبلغ على رقم:</p>
+                    <div class="copy-box">
+                        <strong id="vf-number" style="font-size: 1.2rem; color: #c0392b; font-family: monospace;">01018953457</strong>
+                        <button type="button" onclick="copyText('vf-number')" style="background: #eee; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                            <i class="fas fa-copy"></i> نسخ
+                        </button>
+                    </div>
+                </div>
+
+                <div id="instapay-info" class="pay-info">
+                    <p style="margin-bottom: 5px;">عنوان الدفع (IPA):</p>
+                    <div class="copy-box">
+                        <strong id="insta-address" style="font-size: 1.1rem; color: #6c5ce7; font-family: monospace;">ahmed4.8.9@instapay</strong>
+                        <button type="button" onclick="copyText('insta-address')" style="background: #eee; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                            <i class="fas fa-copy"></i> نسخ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="upload-info-box">
+                    <i class="fas fa-cam" style="font-size: 2rem; color: #7f8c8d; margin-bottom: 10px;"></i>
+                    <p style="margin: 0; color: #555; font-weight: bold;">
+                        يرجى تجهيز صورة التحويل (سكرين شوت) لإرسالها فوراً بعد الضغط على تأكيد.
+                    </p>
+                </div>
+
+                <!-- جملة الطمأنينة (الجديدة) -->
+                <div style="display: flex; align-items: center; gap: 10px; background: #fff8e1; padding: 10px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; color: #d35400;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>بمجرد إرسال الطلب، سنتواصل معك فوراً لتأكيد الحجز. مكان ابنك محفوظ!</span>
+                </div>
+
+                <button type="submit" class="confirm-btn">
+                    تأكيد الحجز وإرسال الإيصال <i class="fab fa-whatsapp"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/201019342589" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        let offerPrice = null;
+        let offerDiscountValue = 0;
+        let offerDiscountType = 'none';
+        let couponDiscount = { type: 'none', value: 0 };
+
+        function updateInvoice() {
+            const dropdown = document.getElementById('course_dropdown');
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+
+            if (selectedOption.value) {
+                const name = selectedOption.getAttribute('data-name');
+                let originalPrice = parseInt(selectedOption.getAttribute('data-price'));
+                let currentPrice = originalPrice;
+                let note = "";
+
+                if (offerPrice !== null) { currentPrice = offerPrice; note = " (سعر العرض)"; }
+                else if (offerDiscountType === 'fixed') { currentPrice -= offerDiscountValue; note = ` (خصم عرض ${offerDiscountValue} ج.م)`; }
+                else if (offerDiscountType === 'percent') { let discountAmount = originalPrice * (offerDiscountValue / 100); currentPrice -= discountAmount; note = ` (خصم عرض ${offerDiscountValue}%)`; }
+
+                if (couponDiscount.type === 'fixed') { currentPrice -= couponDiscount.value; note += ` + كوبون (${couponDiscount.value} ج.م)`; } 
+                else if (couponDiscount.type === 'percent') { let discountAmount = currentPrice * (couponDiscount.value / 100); currentPrice -= discountAmount; note += ` + كوبون (${couponDiscount.value}%)`; }
+
+                document.getElementById('course-name').innerText = name + note;
+                document.getElementById('course-price').innerText = originalPrice + " ج.م";
+                const totalEl = document.getElementById('total-price');
+                totalEl.innerText = Math.max(0, Math.round(currentPrice)) + " ج.م";
+                
+                if (currentPrice < originalPrice) {
+                    totalEl.style.color = "#27ae60";
+                    document.getElementById('course-price').style.textDecoration = "line-through";
+                    document.getElementById('course-price').style.color = "#999";
+                    document.getElementById('discount-row').style.display = "flex";
+                    document.getElementById('discount-amount').innerText = "-" + (originalPrice - Math.round(currentPrice)) + " ج.م";
+                } else {
+                    totalEl.style.color = "#4ECDC4";
+                    document.getElementById('course-price').style.textDecoration = "none";
+                    document.getElementById('course-price').style.color = "#bdc3c7";
+                    document.getElementById('discount-row').style.display = "none";
+                }
+            }
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('coupon_input').value.trim().toUpperCase();
+            const msg = document.getElementById('coupon-msg');
+            
+            if (code === 'CPK100' || code === 'EARLYBIRD') { couponDiscount = { type: 'fixed', value: 100 }; msg.style.color = 'green'; msg.innerText = "تم تفعيل خصم 100 جنيه! 🎉"; } 
+            else if (code === 'WELCOME10' || code === 'SIBLINGS') { couponDiscount = { type: 'percent', value: 10 }; msg.style.color = 'green'; msg.innerText = "تم تفعيل خصم 10%! 🎉"; } 
+            else { msg.style.color = 'red'; msg.innerText = "الكود غير صحيح ❌"; couponDiscount = { type: 'none', value: 0 }; }
+            updateInvoice();
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let plan = urlParams.get('plan');
+            if(plan) {
+                plan = decodeURIComponent(plan);
+                document.getElementById('selected_plan').value = plan;
+                
+                if (plan.includes('1500') || plan.includes('بطل')) { offerPrice = 1500; }
+                else if (plan.includes('100') || plan.includes('مبكر')) { offerDiscountType = 'fixed'; offerDiscountValue = 100; }
+                else if (plan.includes('20') || plan.includes('شلة')) { offerDiscountType = 'percent'; offerDiscountValue = 20; }
+
+                const dropdown = document.getElementById('course_dropdown');
+                const planLower = plan.toLowerCase();
+                
+                if (planLower.includes('scratch') || plan.includes('سكراتش')) dropdown.value = "scratch";
+                else if (planLower.includes('python')) { 
+                    if (planLower.includes('oop') || plan.includes('وحش')) dropdown.value = "python_oop";
+                    else dropdown.value = "python";
+                }
+                else if (offerPrice === 1500) dropdown.value = "python";
+
+                updateInvoice();
+            }
+        }
+
+        function selectPay(type, card) {
+            document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.pay-info').forEach(b => b.style.display = 'none');
+            card.classList.add('active');
+            document.getElementById(type + '-info').style.display = 'block';
+        }
+
+        function copyText(elementId) {
+            var text = document.getElementById(elementId).innerText.trim();
+            navigator.clipboard.writeText(text);
+            const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 2000 });
+            Toast.fire({ icon: 'success', title: 'تم النسخ بنجاح' });
+        }
+
+        function submitToWhatsapp() {
+            const name = document.getElementById('child_name').value;
+            const age = document.getElementById('child_age').value;
+            const phone = document.getElementById('parent_phone').value;
+            const courseDropdown = document.getElementById('course_dropdown');
+            
+            if(!name || !age || !phone || courseDropdown.value == "") {
+                Swal.fire({ icon: 'warning', title: 'بيانات ناقصة', text: 'يرجى ملء جميع البيانات أولاً', confirmButtonColor: '#2c3e50' });
+                return;
+            }
+
+            const courseName = courseDropdown.options[courseDropdown.selectedIndex].text;
+            const total = document.getElementById('total-price').innerText;
+            const plan = document.getElementById('selected_plan').value;
+
+            const msg = `مرحباً، أرغب في تأكيد حجز كورس:%0a%0a👤 الطالب: ${name} (${age} سنة)%0a📱 ولي الأمر: ${phone}%0a📚 الكورس: ${courseName}%0a💰 المبلغ النهائي: ${total}%0a🏷️ العرض/الكوبون: ${plan}%0a%0a(مرفق صورة التحويل)`;
+            const waLink = `https://wa.me/201019342589?text=${msg}`;
+
+            Swal.fire({
+                title: '<strong>تأكيد الحجز</strong>',
+                icon: 'success',
+                html: `
+                    <div style="text-align: right; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; color: #555;">
+                        <p>تم حفظ بياناتك بنجاح! ✅</p>
+                        <p>اضغط بالأسفل لفتح واتساب وإرسال الإيصال.</p>
+                    </div>
+                    <a href="${waLink}" target="_blank" class="whatsapp-btn-large">
+                        <i class="fab fa-whatsapp"></i> فتح واتساب الآن
+                    </a>
+                `,
+                showConfirmButton: false,
+                showCloseButton: true
+            });
+        }
+
+        const form = document.getElementById('bookingForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({ title: 'جاري تسجيل الطلب...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+            const formData = new FormData(form);
+            formData.append("Final_Price", document.getElementById('total-price').innerText);
+
+            fetch("https://api.web3forms.com/submit", { method: 'POST', body: formData })
+            .then(() => { submitToWhatsapp(); })
+            .catch(() => { submitToWhatsapp(); });
+        });
+    </script>
+</body>
+</html>

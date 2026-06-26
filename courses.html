@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جميع الدورات | Code Planet Kids</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- الهيرو الجديد --- */
+        .courses-hero { 
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe); 
+            color: white; 
+            padding: 80px 20px 120px; 
+            text-align: center; 
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); 
+            margin-bottom: -60px; 
+        }
+        .courses-hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 800; }
+        .courses-hero p { font-size: 1.2rem; opacity: 0.9; }
+
+        /* --- نظام الشبكة (Grid) --- */
+        .courses-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
+            max-width: 1200px; 
+            margin: 0 auto 60px; 
+            padding: 0 20px; 
+        }
+
+        /* --- تصميم الكارت الاحترافي --- */
+        .pro-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pro-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1); 
+        }
+
+        /* الصورة */
+        .card-img {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .pro-card:hover .card-img img { transform: scale(1.1); }
+
+        /* البادجات */
+        .badge-top {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .badge-green { background: #2ecc71; }
+        .badge-hot { background: #FF6B6B; }
+        .badge-dark { background: #2c3e50; }
+
+        /* المحتوى */
+        .card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .card-title { font-size: 1.4rem; color: #2c3e50; margin-bottom: 10px; font-weight: 800; }
+        .card-desc { color: #7f8c8d; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #555;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .card-meta i { color: #6c5ce7; }
+
+        /* السعر والزرار */
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .price-wrap { display: flex; flex-direction: column; }
+        .old { text-decoration: line-through; color: #ccc; font-size: 0.9rem; }
+        .curr { color: #2c3e50; font-size: 1.4rem; font-weight: 900; }
+
+        .btn-view {
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+        .btn-view:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(108, 92, 231, 0.5); }
+
+        /* الكارت المقفول */
+        .card-locked { filter: grayscale(0.8); opacity: 0.9; }
+        .card-locked:hover { filter: grayscale(0); opacity: 1; }
+        .btn-locked { background: #333; box-shadow: none; }
+        
+        @media (max-width: 768px) { 
+            .courses-hero { padding-top: 120px; } 
+            .card-img { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo"> Code Planet Kids</a>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <nav id="navbar">
+                <a href="index.html">الرئيسية</a>
+                <a href="courses.html" style="color: var(--primary-color);">الدورات</a>
+                <a href="offers.html">العروض</a>
+                <a href="jobs.html" style="color: #f1c40f;">انضم لفريقنا</a>
+                <a href="register.html" class="cta-btn">سجل الآن</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="courses-hero">
+        <h1>اكتشف شغفك 🚀</h1>
+        <p>مسارات تعليمية مصممة خصيصاً لبناء عقلية المبرمج الصغير</p>
+    </div>
+
+    <main>
+        <div class="courses-grid">
+            
+            <!-- كارت 1: سكراتش -->
+            <div class="pro-card">
+                <div class="card-img">
+                    <span class="badge-top badge-green">مبتدئ</span>
+                    <img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Scratch">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">سكراتش الشاملة (Scratch)</h3>
+                    <p class="card-desc">البوابة الأولى لعالم البرمجة. سيتعلم طفلك كيفية تحويل خياله إلى ألعاب وقصص تفاعلية.</p>
+                    
+                    <div class="card-meta">
+                        <span><i class="fas fa-user"></i> 7-11 سنة</span>
+                        <span><i class="far fa-clock"></i> 8 أسابيع</span>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-wrap">
+                            <span class="old">1000 ج.م</span>
+                            <span class="curr">800 ج.م</span>
+                        </div>
+                        <a href="course-1.html" class="btn-view">التفاصيل <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت 2: بايثون -->
+            <div class="pro-card" style="border-top: 4px solid #FF6B6B;">
+                <div class="card-img">
+                    <span class="badge-top badge-hot">الأكثر طلباً 🔥</span>
+                    <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Python">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">بايثون: المستوى الأول</h3>
+                    <p class="card-desc">تعلم لغة الكبار بطريقة ممتعة. سنبني برامج حقيقية ونفهم كيف يفكر الكمبيوتر.</p>
+                    
+                    <div class="card-meta">
+                        <span><i class="fas fa-user-graduate"></i> 11+ سنة</span>
+                        <span><i class="fas fa-laptop-code"></i> 20 حصة</span>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-wrap">
+                            <span class="old">1250 ج.م</span>
+                            <span class="curr" style="color: #FF6B6B;">1000 ج.م</span>
+                        </div>
+                        <a href="course-python.html" class="btn-view" style="background: linear-gradient(45deg, #FF6B6B, #ff9f43);">احجز الآن</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت 3: OOP -->
+            <div class="pro-card card-locked">
+                <div class="card-img">
+                    <span class="badge-top badge-dark"><i class="fas fa-lock"></i> مغلق</span>
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="OOP">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">بايثون: مستوى الوحش (OOP)</h3>
+                    <p class="card-desc">للمحترفين فقط. تعلم هندسة البرمجيات وبناء الأنظمة الكبيرة والمعقدة.</p>
+                    
+                    <div class="card-meta">
+                        <span><i class="fas fa-skull"></i> متقدم</span>
+                        <span><i class="fas fa-certificate"></i> شهادة Master</span>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="price-wrap">
+                            <span class="curr">1500 ج.م</span>
+                        </div>
+                        <a href="course-python-oop.html" class="btn-view btn-locked">انضم للوحوش</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <a href="https://wa.me/201018953457" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <footer class="site-footer">
+        <div class="container"><p style="text-align: center; color: #bdc3c7;">© 2026 Code Planet Kids.</p></div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navbar').classList.toggle('active'); }
+    </script>
+</body>
+</html>

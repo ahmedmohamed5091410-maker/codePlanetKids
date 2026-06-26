@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا | Code Planet Kids</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .contact-hero { background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 80px 20px; text-align: center; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; max-width: 1100px; margin: -50px auto 50px; padding: 0 20px; }
+        
+        .contact-info { background: #2c3e50; color: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .info-item i { font-size: 1.5rem; color: #4ECDC4; }
+        
+        .contact-form-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.05); }
+        .form-input { width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #f0f0f0; border-radius: 10px; font-family: 'Cairo', sans-serif; }
+        .form-input:focus { border-color: #4ECDC4; outline: none; }
+        .btn-send { width: 100%; padding: 15px; background: #4ECDC4; color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-send:hover { background: #34495e; }
+
+        @media (max-width: 768px) { .contact-container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo"><img src="logo.png"> Code Planet Kids</a>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <nav id="navbar">
+                <a href="index.html">الرئيسية</a>
+                <a href="courses.html">الدورات</a>
+                <a href="contact.html" style="color: var(--primary-color);">تواصل معنا</a>
+                <a href="register.html" class="cta-btn">سجل الآن</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-hero">
+        <h1>تواصل مع فريقنا 📬</h1>
+        <p>عندك استفسار؟ إحنا هنا عشان نساعدك</p>
+    </div>
+
+    <div class="contact-container">
+        <!-- معلومات الاتصال -->
+        <div class="contact-info">
+            <h3 style="margin-bottom: 30px;">معلومات الاتصال</h3>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>info@codeplanetkids.com</span> <!-- الإيميل الشيك -->
+            </div>
+            <div class="info-item">
+                <i class="fab fa-whatsapp"></i>
+                <span>01018953457</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>متاحين يومياً من 10 صباحاً لـ 10 مساءً</span>
+            </div>
+        </div>
+
+        <!-- الفورم (بيبعت لـ Gmail بتاعك) -->
+        <div class="contact-form-card">
+            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="6165816a-da06-441b-aaeb-a834d6c319c2">
+                <input type="hidden" name="subject" value="رسالة جديدة من الموقع 📩">
+
+                <input type="text" name="name" class="form-input" placeholder="الاسم بالكامل" required>
+                <input type="email" name="email" class="form-input" placeholder="البريد الإلكتروني" required>
+                <textarea name="message" class="form-input" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
+
+                <button type="submit" class="btn-send">إرسال الرسالة 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/201018953457" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <footer class="site-footer">
+        <div class="container"><p style="text-align: center; color: #bdc3c7;">© 2026 Code Planet Kids.</p></div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navbar').classList.toggle('active'); }
+
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({ title: 'جاري الإرسال...', didOpen: () => Swal.showLoading() });
+            
+            const formData = new FormData(form);
+            fetch(form.action, { method: 'POST', body: formData })
+            .then(res => {
+                if(res.ok) {
+                    Swal.fire({ icon: 'success', title: 'تم الإرسال بنجاح!', text: 'سنقوم بالرد عليك قريباً.', confirmButtonColor: '#4ECDC4' });
+                    form.reset();
+                } else throw new Error();
+            })
+            .catch(() => Swal.fire('خطأ', 'تأكد من الإنترنت', 'error'));
+        });
+    </script>
+</body>
+</html>

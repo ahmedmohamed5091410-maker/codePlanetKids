@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | Code Planet Kids</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-hero { text-align: center; padding: 80px 20px; background: linear-gradient(135deg, #fdfbf7, #fff); margin-bottom: 40px; }
+        .about-hero h1 { color: var(--primary-color); font-size: 2.5rem; margin-bottom: 15px; }
+        .about-hero p { font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto; }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; margin-bottom: 80px; }
+        .about-text h2 { font-size: 2rem; color: #2c3e50; margin-bottom: 20px; }
+        .about-text p { font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 15px; }
+        .about-img img { width: 100%; border-radius: 20px; box-shadow: 10px 10px 0px var(--secondary-color); }
+
+        .stats-box { text-align: center; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .stats-number { font-size: 2.5rem; font-weight: bold; color: var(--secondary-color); display: block; }
+
+        .team-section { padding: 60px 20px; background: #f9f9f9; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .team-card { background: white; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+        .team-card:hover { transform: translateY(-10px); }
+        .team-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 4px solid #f0f0f0; }
+        .team-role { color: #FF6B6B; font-weight: bold; font-size: 0.9rem; margin-bottom: 10px; }
+
+        @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo"> Code Planet Kids</a>
+            <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <nav id="navbar">
+                <a href="index.html">الرئيسية</a>
+                <a href="courses.html">الدورات</a>
+                <a href="offers.html">العروض</a>
+                <a href="jobs.html" style="color: #f1c40f;">انضم لفريقنا</a>
+                <a href="register.html" class="cta-btn">سجل الآن</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- مقدمة -->
+        <section class="about-hero">
+            <h1>👋 أهلاً بكم في Code Planet Kids</h1>
+            <p>نحن لا نعلم البرمجة فقط، نحن نبني عقول المستقبل. هدفنا تحويل الطفل من مستهلك للتكنولوجيا إلى صانع لها.</p>
+        </section>
+
+        <!-- القصة -->
+        <section class="about-grid">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Kids Coding">
+            </div>
+            <div class="about-text">
+                <h2>كيف بدأت القصة؟</h2>
+                <p>في Code Planet Kids، نؤمن أن البرمجة هي لغة العصر. بدأنا بحلم بسيط: تحويل وقت الأطفال أمام الشاشات من مجرد "لعب واستهلاك" إلى "إبداع وإنتاج".</p>
+                <p>نستخدم أحدث مناهج التعليم العالمية لتبسيط المفاهيم المعقدة وجعلها ممتعة، ليخرج الطفل قادراً على تصميم ألعابه الخاصة ومواقعه الإلكترونية بنفسه.</p>
+            </div>
+        </section>
+
+        <!-- الرؤية -->
+        <section class="about-grid" style="direction: ltr;">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Future Vision">
+            </div>
+            <div class="about-text" style="direction: rtl; text-align: right;">
+                <h2>رؤيتنا للمستقبل 🚀</h2>
+                <p>هدفنا ليس تخريج مبرمجين فقط، بل تخريج مفكرين. البرمجة تعلم الطفل التفكير المنطقي، حل المشكلات، والصبر حتى الوصول للهدف.</p>
+            </div>
+        </section>
+
+        <!-- الأرقام -->
+        <section style="margin: 60px 0;">
+            <div class="grid-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div class="stats-box">
+                    <span class="stats-number">+500</span>
+                    <p>طالب تخرجوا</p>
+                </div>
+                <div class="stats-box">
+                    <span class="stats-number">+100</span>
+                    <p>مشروع تم تنفيذه</p>
+                </div>
+                <div class="stats-box">
+                    <span class="stats-number">100%</span>
+                    <p>شغف واهتمام</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- فريق العمل (الجديد) -->
+        <section class="team-section">
+            <h2 style="text-align: center; margin-bottom: 30px;">فريقنا المميز 🌟</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg" alt="Trainer" class="team-img">
+                    <h3>م. أحمد</h3>
+                    <p class="team-role">مؤسس الأكاديمية</p>
+                    <p style="color: #777; font-size: 0.9rem;">خبير برمجة وشاطر جداً في تحويل الكود للعبة ممتعة.</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://img.freepik.com/free-vector/businesswoman-character-avatar-isolated_24877-60112.jpg" alt="Trainer" class="team-img">
+                    <h3>م. منه</h3>
+                    <p class="team-role">مشرفة التعليم</p>
+                    <p style="color: #777; font-size: 0.9rem;">صبورة جداً مع الأطفال وبتتابع كل طالب خطوة بخطوة.</p>
+                </div>
+               
+            </div>
+        </section>
+
+        <!-- دعوة للانضمام -->
+        <section style="text-align: center; background: #e3f2fd; padding: 50px; border-radius: 20px; margin: 50px 0;">
+            <h2>هل أنتم مستعدون للبداية؟</h2>
+            <p style="margin: 15px 0;">لا تفوتوا الفرصة، المقاعد محدودة!</p>
+            <a href="register.html" class="cta-btn" style="font-size: 1.2rem; padding: 15px 40px;">سجل طفلك الآن</a>
+        </section>
+
+    </main>
+
+    <a href="https://wa.me/201019342589" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div style="text-align: right;">
+                    <h3 style="margin-bottom: 5px;">Code Planet Kids</h3>
+                    <p style="color: #bdc3c7; line-height: 1.6;">أكاديمية رائدة لتعليم البرمجة للأطفال. هدفنا بناء جيل مبدع.</p>
+                    <div class="social-icons" style="margin-top: 15px;">
+                        <!--<a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>-->
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>أقسام الموقع</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-angle-left"></i> الرئيسية</a></li>
+                        <li><a href="courses.html"><i class="fas fa-angle-left"></i> الدورات المتاحة</a></li>
+                        <li><a href="offers.html"><i class="fas fa-angle-left"></i> الباقات والعروض</a></li>
+                        <li><a href="register.html"><i class="fas fa-angle-left"></i> تسجيل طالب جديد</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>انضم إلينا</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="privacy.html" style="color: #bdc3c7; text-decoration: none; transition: 0.3s;">سياسة الخصوصية</a></li>
+                        <li><a href="jobs.html" style="color: #f1c40f; font-weight: bold;"><i class="fas fa-briefcase"></i> وظائف مدربين</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>تواصل معنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://wa.me/201018953457"><i class="fab fa-whatsapp"></i> 01018953457</a></li>
+<!-- في الفوتر -->
+<li><a href="contact.html"><i class="fas fa-envelope"></i> تواصل معنا</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>© 2026 Code Planet Kids. جميع الحقوق محفوظة.</p></div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navbar').classList.toggle('active'); }
+    </script>
+</body>
+</html>
